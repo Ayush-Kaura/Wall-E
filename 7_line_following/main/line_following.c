@@ -102,11 +102,9 @@ void line_follow_task(void* arg)
     ESP_ERROR_CHECK(enable_line_sensor());
     ESP_ERROR_CHECK(enable_bar_graph());
 #ifdef CONFIG_ENABLE_OLED
-    // Declaring the required OLED struct
-    u8g2_t oled_config;
 
     // Initialising the OLED
-    ESP_ERROR_CHECK(init_oled(&oled_config));
+    ESP_ERROR_CHECK(init_oled());
 #endif
     
     while(true)
@@ -135,7 +133,7 @@ void line_follow_task(void* arg)
         // Diplaying kp, ki, kd values on OLED 
         if (read_pid_const().val_changed)
         {
-            display_pid_values(read_pid_const().kp, read_pid_const().ki, read_pid_const().kd, &oled_config);
+            display_pid_values(read_pid_const().kp, read_pid_const().ki, read_pid_const().kd);
             reset_val_changed_pid_const();
         }
 #endif
